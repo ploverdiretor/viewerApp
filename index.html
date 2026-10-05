@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>マルチ画像ビュアー</title>
+  <!-- CSSファイルの読み込み -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="container">
+  <!-- 左側サイドバー -->
+  <div class="sidebar" id="sidebar">
+    <div class="upload-btn">
+      <label for="folder-input">フォルダーを選択</label>
+      <input type="file" id="folder-input" webkitdirectory directory multiple>
+    </div>
+
+    <!-- 設定欄を削除し、ここから直接ツリーを表示します -->
+    <div class="tree-container" id="tree-container">
+      <p class="placeholder-text">フォルダーを選択すると、ここにツリーが表示されます。</p>
+    </div>
+  </div>
+
+  <!-- 右側メインビューア -->
+  <div class="viewer">
+    <!-- コントロールエリア -->
+    <div class="control-panel" id="control-panel">
+      <button class="toggle-btn" id="toggle-btn">📁 ツリー開閉</button>
+      <button class="hide-menu-btn" id="hide-menu-btn">👁 メニューを隠す (H)</button>
+      <button class="fullscreen-btn" id="fullscreen-btn">📺 全画面表示 (F)</button>
+      
+      <div class="limit-selector">
+        <label for="image-limit">表示枚数:</label>
+        <select id="image-limit">
+          <option value="all">すべて</option>
+          <option value="2">2枚</option>
+          <option value="3" selected>3枚</option>
+          <option value="4">4枚</option>
+          <option value="5">5枚</option>
+          <option value="10">10枚</option>
+        </select>
+      </div>
+
+      <div class="fit-selector">
+        <label>
+          <input type="checkbox" id="fit-checkbox" checked> 画面内に収める
+        </label>
+      </div>
+
+      <!-- ページめくり（進む・戻る）ボタンエリア -->
+      <div class="pager-container">
+        <button class="nav-btn" id="prev-btn" disabled>◀ 戻る</button>
+        <span class="page-info" id="page-info">0 / 0</span>
+        <button class="nav-btn" id="next-btn" disabled>進む ▶</button>
+      </div>
+    </div>
+    
+    <div class="image-grid" id="image-grid">
+      <!-- ここに選択したフォルダーの画像が横並びで入ります -->
+    </div>
+  </div>
+</div>
+
+<!-- JavaScriptファイルの読み込み -->
+<script src="app.js"></script>
+</body>
+</html>

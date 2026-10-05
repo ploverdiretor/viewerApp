@@ -1,0 +1,261 @@
+/* 全体レイアウト調整 */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+body, html {
+  height: 100%;
+  font-family: sans-serif;
+  overflow: hidden;
+  background-color: #1e1e1e;
+  color: #fff;
+}
+.container {
+  display: flex;
+  height: 100%;
+  position: relative;
+}
+
+/* 左側：フォルダーツリーエリア */
+.sidebar {
+  width: 300px;
+  min-width: 300px;
+  border-right: 1px solid #3c3c3c;
+  background-color: #252526;
+  display: flex;
+  flex-direction: column;
+  transition: margin-left 0.2s ease;
+  z-index: 20;
+}
+.sidebar.hidden {
+  margin-left: -300px;
+}
+
+.upload-btn {
+  padding: 15px;
+  border-bottom: 1px solid #3c3c3c;
+}
+.upload-btn input {
+  display: none;
+}
+.upload-btn label {
+  display: block;
+  background: #007acc;
+  color: white;
+  text-align: center;
+  padding: 8px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+}
+.upload-btn label:hover {
+  background: #0062a3;
+}
+
+.tree-container {
+  flex: 1;
+  overflow-y: auto;
+  padding: 10px;
+  font-size: 14px;
+}
+.placeholder-text {
+  color: #888;
+}
+.tree-node {
+  margin-left: 15px;
+  user-select: none;
+}
+
+.subfolders-container {
+  display: none;
+}
+.subfolders-container.expanded {
+  display: block;
+}
+
+/* フォルダー名の基本スタイル */
+.folder-name {
+  cursor: pointer;
+  padding: 4px;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  border-radius: 3px;
+  width: calc(100% - 10px);
+}
+.folder-name:hover {
+  background-color: #37373d;
+}
+.folder-name.active {
+  background-color: #094771;
+}
+
+/* アイコンと三角マークの表示ロジック */
+.folder-name::before {
+  content: "   📁 ";
+  color: #e0bb65;
+}
+.folder-name.has-sub::before {
+  content: "▶ 📁 ";
+  color: #e0bb65;
+}
+.folder-name.has-sub.is-expanded::before {
+  content: "▼ 📂 ";
+  color: #e0bb65;
+}
+
+/* 右側：画像表示エリア */
+.viewer {
+  flex: 1;
+  height: 100%;
+  background-color: #1e1e1e;
+  position: relative;
+  overflow: hidden;
+}
+
+/* 【修正】コントロールパネルを右上固定かつ、中身のサイズぴったりに縮める */
+.control-panel {
+  position: absolute;
+  top: 15px;
+  right: 15px;                 /* 【重要】右端からの固定位置のみ指定 */
+  /* left: 15px; を削除することで、左に長く伸びるのを防ぎます */
+  
+  z-index: 30;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  background-color: rgba(30, 30, 30, 0.75);
+  padding: 8px 15px;
+  border-radius: 4px;
+  backdrop-filter: blur(4px);
+  transition: transform 0.2s ease, opacity 0.2s ease;
+  transform: translateY(0);
+  opacity: 1;
+}
+
+/* コントロールパネルを隠すときのクラス */
+.control-panel.panel-hidden {
+  transform: translateY(-60px);
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* ボタン類の共通スタイル */
+.toggle-btn, .hide-menu-btn, .fullscreen-btn {
+  background: #333;
+  color: #fff;
+  border: 1px solid #555;
+  padding: 6px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 13px;
+}
+.toggle-btn:hover, .hide-menu-btn:hover, .fullscreen-btn:hover {
+  background: #444;
+}
+
+/* 【修正】無駄な余白を完全に廃止 */
+.toggle-btn {
+  margin-left: 0; /* 前の「margin-left: auto;」をリセットして余白を完全に消します */
+}
+
+.limit-selector {
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.limit-selector select {
+  background: #333;
+  color: #fff;
+  border: 1px solid #555;
+  padding: 4px 8px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.fit-selector {
+  font-size: 14px;
+  user-select: none;
+}
+.fit-selector label {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.pager-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 14px;
+}
+.nav-btn {
+  background: #333;
+  color: #fff;
+  border: 1px solid #555;
+  padding: 4px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+.nav-btn:hover:not(:disabled) {
+  background: #444;
+}
+.nav-btn:disabled {
+  background: #222;
+  color: #555;
+  border-color: #333;
+  cursor: not-allowed;
+}
+.page-info {
+  color: #ccc;
+  min-width: 60px;
+  text-align: center;
+}
+
+/* 横並び・余白ゼロで画面全体にフィットさせるスタイル */
+.image-grid {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 0;
+  width: 100%;
+  height: 100%;
+}
+.image-item {
+  flex: 1;
+  height: 100%;
+  background: #000;
+  overflow: hidden;
+  position: relative;
+}
+
+.image-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain; 
+}
+
+.image-grid.fill-mode .image-item img {
+  object-fit: cover;
+}
+
+.image-name {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  font-size: 11px;
+  color: #fff;
+  background-color: rgba(0, 0, 0, 0.6);
+  padding: 8px;
+  text-align: center;
+  word-break: break-all;
+  z-index: 10;
+  transition: opacity 0.2s ease;
+}
+
+.control-panel.panel-hidden ~ #image-grid .image-name {
+  opacity: 0;
+}
