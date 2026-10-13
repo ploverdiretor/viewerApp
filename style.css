@@ -114,13 +114,11 @@ body, html {
   overflow: hidden;
 }
 
-/* 【修正】コントロールパネルを右上固定かつ、中身のサイズぴったりに縮める */
+/* コントロールパネル */
 .control-panel {
   position: absolute;
   top: 15px;
-  right: 15px;                 /* 【重要】右端からの固定位置のみ指定 */
-  /* left: 15px; を削除することで、左に長く伸びるのを防ぎます */
-  
+  right: 15px;
   z-index: 30;
   display: flex;
   align-items: center;
@@ -134,7 +132,6 @@ body, html {
   opacity: 1;
 }
 
-/* コントロールパネルを隠すときのクラス */
 .control-panel.panel-hidden {
   transform: translateY(-60px);
   opacity: 0;
@@ -142,7 +139,7 @@ body, html {
 }
 
 /* ボタン類の共通スタイル */
-.toggle-btn, .hide-menu-btn, .fullscreen-btn {
+.toggle-btn, .hide-menu-btn, .fullscreen-btn, .memo-toggle-btn, #memo-save-btn {
   background: #333;
   color: #fff;
   border: 1px solid #555;
@@ -151,13 +148,65 @@ body, html {
   cursor: pointer;
   font-size: 13px;
 }
-.toggle-btn:hover, .hide-menu-btn:hover, .fullscreen-btn:hover {
+.toggle-btn:hover, .hide-menu-btn:hover, .fullscreen-btn:hover, .memo-toggle-btn:hover, #memo-save-btn:hover {
   background: #444;
 }
 
-/* 【修正】無駄な余白を完全に廃止 */
 .toggle-btn {
-  margin-left: 0; /* 前の「margin-left: auto;」をリセットして余白を完全に消します */
+  margin-left: auto; 
+}
+
+/* 【修正】メモ用パネルの幅を現在の1.5倍（640px → 960px）に拡大 */
+.memo-panel {
+  position: absolute;
+  top: 60px;
+  right: 15px;
+  width: 960px;               /* 640px から 960px (1.5倍) に拡大 */
+  height: 500px;              /* 高さは500pxを維持 */
+  background-color: rgba(30, 30, 30, 0.95);
+  border: 1px solid #444;
+  border-radius: 6px;
+  z-index: 25;
+  display: flex;
+  flex-direction: column;
+  padding: 15px;
+  backdrop-filter: blur(6px);
+  transition: opacity 0.2s ease, transform 0.2s ease;
+  
+  opacity: 0;
+  transform: translateY(-10px);
+  pointer-events: none;
+}
+
+.memo-panel.visible {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+.memo-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+  font-size: 14px;
+  color: #aaa;
+}
+
+#memo-textarea {
+  flex: 1;
+  background-color: #1a1a1a;
+  color: #fff;
+  border: 1px solid #555;
+  border-radius: 4px;
+  padding: 12px;
+  resize: none;
+  font-size: 14px;
+  line-height: 1.5;
+}
+#memo-textarea:focus {
+  outline: none;
+  border-color: #007acc;
 }
 
 .limit-selector {

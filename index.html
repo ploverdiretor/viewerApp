@@ -16,7 +16,6 @@
       <input type="file" id="folder-input" webkitdirectory directory multiple>
     </div>
 
-    <!-- 設定欄を削除し、ここから直接ツリーを表示します -->
     <div class="tree-container" id="tree-container">
       <p class="placeholder-text">フォルダーを選択すると、ここにツリーが表示されます。</p>
     </div>
@@ -54,6 +53,18 @@
         <span class="page-info" id="page-info">0 / 0</span>
         <button class="nav-btn" id="next-btn" disabled>進む ▶</button>
       </div>
+
+      <!-- 【修正】メモ切り替えボタンを一番右側に移動 -->
+      <button class="memo-toggle-btn" id="memo-toggle-btn">📝 メモ表示/非表示</button>
+    </div>
+    
+    <!-- メモ記入エリア -->
+    <div class="memo-panel" id="memo-panel">
+      <div class="memo-header">
+        <span id="memo-folder-title">フォルダーメモ</span>
+        <button id="memo-save-btn">💾 フォルダー内へ保存</button>
+      </div>
+      <textarea id="memo-textarea" placeholder="このフォルダーに関するメモを自由に入力してください..."></textarea>
     </div>
     
     <div class="image-grid" id="image-grid">
